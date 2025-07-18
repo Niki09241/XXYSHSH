@@ -1,0 +1,42 @@
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>报名查询</title>
+    <script src="data.js"></script>
+    <style>
+        body { font-family: sans-serif; padding: 20px; }
+        input, button { padding: 8px; margin: 5px; }
+        .result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>报名场次与编码查询</h2>
+    <p>请输入姓名或身份证号后六位：</p>
+    <input type="text" id="queryInput" placeholder="例如：张三 或 123456">
+    <button onclick="search()">查询</button>
+
+    <div class="result" id="resultArea"></div>
+
+    <script>
+        function search() {
+            const input = document.getElementById('queryInput').value.trim();
+            const resultArea = document.getElementById('resultArea');
+            if (!input) {
+                resultArea.innerText = "请输入有效的姓名或身份证后六位。";
+                return;
+            }
+
+            const found = data.filter(d => d.name === input || d.last6 === input);
+            if (found.length > 0) {
+                resultArea.innerHTML = found.map(f => 
+                    `姓名：${f.name}，报名场次：${f.session}，序号：${f.index}`
+                ).join("<br>");
+            } else {
+                resultArea.innerText = "未找到匹配信息，请检查输入是否正确。";
+            }
+        }
+    </script>
+</body>
+</html>
