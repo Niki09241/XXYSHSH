@@ -21,10 +21,16 @@
   <script>
     function search() {
       const input = document.getElementById("inputValue").value.trim();
-      const match = people.find(p => p["姓名"] === input || p["身份证后六位"] === input);
+      const matches = data.filter(p => p.name === input || p.last6 === input);
       const resultDiv = document.getElementById("result");
-      if (match) {
-        resultDiv.innerHTML = `查询成功！<br>姓名：<strong>${match["姓名"]}</strong><br>序号：<strong>${match["序号"]}</strong>`;
+
+      if (matches.length > 0) {
+        resultDiv.innerHTML = matches.map(match => `
+          查询成功！<br>
+          姓名：<strong>${match.name}</strong><br>
+          报名场次：<strong>${match.session}</strong><br>
+          序号：<strong>${match.index}</strong>
+        `).join('<hr>');
       } else {
         resultDiv.innerHTML = "未找到匹配的信息，请检查输入是否正确。";
       }
